@@ -5,12 +5,6 @@ import numpy
 from pathlib import Path
 import pandas
 
-# import geopandas
-# from osgeo import ogr
-
-# taxi_zone_shape_file = "s3://nyc-tlc/misc/taxi_zones.zip"
-# taxi_zone_shapes = geopandas.read_file(tiledb.FileIO(tiledb.VFS(), taxi_zone_shape_file, mode="rb"))
-
 array_uri = "/data/test/nyc_yellow_taxi_tiledb"
 header_2016_2020 = [
     "VendorID",
@@ -387,16 +381,9 @@ def load_data(array_uri, files_with_schema_version):
                     f"ingestion 2016 schema file {csv_file[0]} by adding null congestion"
                 )
                 futures.append(executor.submit(ingest_2016, array_uri, csv_file[0]))
-                # ingest_2016(array_uri, csv_file[0])
             elif csv_file[1] == "2015":
-                # print(
-                # f"ingestion 2015 schema file {csv_file[0]} by adding null congestion and ignoring extra fields"
-                # )
                 print(f"Skipping 2015 formatted file {csv_file[0]} for now")
-                # futures.append(executor.submit(ingest_2015, array_uri, csv_file[0]))
-                # ingest_2015(array_uri, csv_file[0], taxi_zone_shapes)
             elif csv_file[1] == "2009":
-                # print(f"ingestion 2009 schema file {csv_file[0]}")
                 print(f"Skipping 2009 formatted file {csv_file[0]} for now")
             else:
                 raise RuntimeError(f"Unknown csv schema version {csv_file[1]}")
